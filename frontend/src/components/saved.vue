@@ -11,6 +11,7 @@
           <th>作成日時</th>
           <th></th>
           <th></th>
+          <th></th>
         </tr>
       </thead>
       <!-- 各レシピの表示 -->
@@ -26,6 +27,29 @@
         </tr>
       </tbody>
     </table>
+
+    <!-- 詳細レシピを表示 -->
+    <div id="ShowDetail" v-if="if_show_detail">
+      <table class="table">
+          <tr>
+            <th>料理名</th>
+            <th>{{shown_recipe.dishname}}</th>
+          </tr>
+          <tr>
+            <th>作成日時</th>
+            <th>{{shown_recipe.created_at}}</th>
+          </tr>
+          <tr>
+            <th>材料</th>
+            <th>{{shown_recipe.stuffs}}</th>
+          </tr>
+          <tr>
+            <th>手順</th>
+            <th>{{shown_recipe.methods}}</th>
+          </tr>
+      </table>
+      <td><button v-if="shown_recipe.show_detail" v-on:click="close_detail(shown_recipe)" class="btn btn-primary">詳細を閉じる</button></td>
+    </div>
   </div>
 </div>
 </template>
@@ -40,6 +64,8 @@ export default {
   data() {
     return {
       saved_data: [],
+      if_show_detail: false,
+      shown_recipe: {}
     }
   },
   created: async function() {
@@ -48,8 +74,20 @@ export default {
   },
   methods: {
     show_detail: function(recipe) {
+
+      if (!this.shown_recipe === {}){
+        this.shown_recipe.show_detail = false
+      }
+
       var stuffs = recipe.stuffs
-      recipe.show_detail = !recipe.show_detail
+      recipe.show_detail = true
+      this.if_show_detail = true
+      this.shown_recipe = recipe
+
+    },
+    close_detail: function(recipe){
+      this.shown_recipe.show_detail = false
+      this.if_show_detail = false
     },
     remove_recipe: function(recipe) {
       var index = this.saved_data.indexOf(recipe)

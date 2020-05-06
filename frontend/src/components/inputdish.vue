@@ -31,82 +31,84 @@
     </tr>
   </div>
   <div id=" extrainfo" v-if="registering_stuffs">
-
-
             <!-- 材料の追加：情報の入力 -->
             <div id="AddStuff">
               <div class="StuffAddForm">
                 <form>
-    <tr>
-      <td><input v-model="stuff_name" type="text" class="form-control" id="formGroupExampleInput" placeholder="材料名"></td>
-      <td><input v-model="stuff_quantity" type="text" class="form-control" id="formGroupExampleInput" placeholder="量"></td>
-      <td><button v-on:click="add_stuff(stuff_name, stuff_quantity)" class="btn btn-outline-secondary">材料を追加</button></td>
-    </tr>
-    </form>
+                  <table>
+                    <tr>
+                      <td><input v-model="stuff_name" type="text" class="form-control" id="formGroupExampleInput" placeholder="材料名"></td>
+                      <td><input v-model="stuff_quantity" type="text" class="form-control" id="formGroupExampleInput" placeholder="量"></td>
+                      <td><button v-on:click="add_stuff(stuff_name, stuff_quantity)" class="btn btn-outline-secondary">材料を追加</button></td>
+                    </tr>
+                  </table>
+                </form>
 
+              </div>
+            </div>
+
+            <!-- 追加された材料の表示 -->
+            <div id="AddedStuffs">
+              <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th>材料No.</th>
+                    <th>材料名</th>
+                    <th>量</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(stuff, index) in stuffs">
+                    <th scope="row">{{index+1}}</th>
+                    <td>{{stuff.name}}</td>
+                    <td>{{stuff.quantity}}</td>
+                    <td><button v-on:click="remove_stuff(stuff)" class="btn btn-outline-danger">削除</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 作り方の追加 -->
+            <div>
+              <div id="AddMethods">
+                <div class="MethodForm">
+                  <form>
+                    <table>
+                      <tr>
+                        <!-- 入力 -->
+                        <td><input v-model="method_input" type="text" class="form-control" id="formGroupExampleInput" placeholder="作り方を入力"></td>
+                        <td><button v-on:click="add_method()" class="btn btn-outline-secondary">手順を追加</button></td>
+                      </tr>
+                    </table>
+                  </form>
+
+                </div>
+              </div>
+
+              <!-- 追加された作り方の表示 -->
+              <div id="AddedStuffs">
+                <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>手順No.</th>
+                      <th>手順</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(method, index) in methods">
+                      <th scope="row">{{index+1}}</th>
+                      <td>{{method.method}}</td>
+                      <td><button v-on:click="remove_method(method)" class="btn btn-outline-danger">削除</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+            </div>
+        </div>
   </div>
-</div>
-
-<!-- 追加された材料の表示 -->
-<div id="AddedStuffs">
-  <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th>材料No.</th>
-        <th>材料名</th>
-        <th>量</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(stuff, index) in stuffs">
-        <th scope="row">{{index+1}}</th>
-        <td>{{stuff.name}}</td>
-        <td>{{stuff.quantity}}</td>
-        <td><button v-on:click="remove_stuff(stuff)" class="btn btn-outline-danger">削除</button></td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<!-- 作り方の追加 -->
-<div>
-  <div id="AddMethods">
-    <div class="MethodForm">
-      <form>
-        <tr>
-          <!-- 入力 -->
-          <td><input v-model="method_input" type="text" class="form-control" id="formGroupExampleInput" placeholder="作り方を入力"></td>
-          <td><button v-on:click="add_method()" class="btn btn-outline-secondary">手順を追加</button></td>
-        </tr>
-      </form>
-
-    </div>
-  </div>
-
-  <!-- 追加された作り方の表示 -->
-  <div id="AddedStuffs">
-    <table class="table">
-      <thead class="thead-light">
-        <tr>
-          <th>手順No.</th>
-          <th>手順</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(method, index) in methods">
-          <th scope="row">{{index+1}}</th>
-          <td>{{method.method}}</td>
-          <td><button v-on:click="remove_method(method)" class="btn btn-outline-danger">削除</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-</div>
-</div>
-</div>
 </template>
 
 <script>
@@ -139,7 +141,7 @@ export default {
     this.createdat = yyyy + '-' + mm + '-' + dd;
   },
   methods: {
-    clear: function(){
+    clear: function() {
       // 変数をクリア
       this.created_at = ""
       this.dishname = ""
@@ -149,18 +151,14 @@ export default {
       this.stuff_name = ""
       this.stuff_quantity = ""
       this.method_input = ""
-      registering_dish = true
-      registering_stuffs = false
-
+      this.registering_dish = true
+      this.registering_stuffs = false
     },
     regist_dish: function() {
       this.registering_dish = false
       this.registering_stuffs = true
     },
     cancel_regist: function() {
-      this.registering_stuffs = false
-      this.registering_dish = true
-      this.stuffs = []
       this.clear()
     },
     add_stuff: function(name, quantity) {

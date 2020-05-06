@@ -3,7 +3,7 @@ import BootstrapVue from 'bootstrap-vue' // added
 
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import mybody from '@/components/mybody'
+import mybody from '@/components/regist_recipe'
 import saved from '@/components/saved'
 
 Vue.use(Router)

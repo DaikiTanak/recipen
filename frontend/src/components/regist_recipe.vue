@@ -25,8 +25,8 @@ export default {
   margin-top: 60px;
 }
 .mybody {
-  height: 60%;
-  width: 60%;
+  height: 100%;
+  width: 70%;
   opacity: 0.9.5;
   position: relative;
   box-sizing: border-box;
